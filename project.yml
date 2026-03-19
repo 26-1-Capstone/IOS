@@ -1,0 +1,28 @@
+name: NutriShare
+options:
+  bundleIdPrefix: com.nutrishare
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+targets:
+  NutriShare:
+    type: application
+    platform: iOS
+    sources:
+      - path: NutriShare
+        excludes:
+          - "Info.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nutrishare.ios
+        PRODUCT_NAME: NutriShare
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_FILE: NutriShare/Info.plist
+        SWIFT_EMIT_LOC_STRINGS: "YES"
+        GENERATE_INFOPLIST_FILE: "NO"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        DEVELOPMENT_ASSET_PATHS: "\"NutriShare/Preview Content\""
+        SWIFT_VERSION: "5.9"

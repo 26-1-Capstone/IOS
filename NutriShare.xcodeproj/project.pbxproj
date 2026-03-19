@@ -1,0 +1,536 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0101C2F6DDE00423917AD88F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239A804337F0CFF4415F4E9 /* HomeView.swift */; };
+		0215CBDCDA3CB77B8A9302C0 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8100368000658238DAB26AB5 /* CheckoutView.swift */; };
+		129C66FFA0E67F9197FF8DA2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE297CCF7BE1EBB99343F53 /* LoginView.swift */; };
+		25BA84610435DB4E9E6A9125 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C72683E759BE4CD40892681 /* ProfileEditView.swift */; };
+		2FFD74273FFB58D6F6D57511 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C183E22897961FEF2DDA3F9 /* Preview Assets.xcassets */; };
+		3013E4AB17DBF15A6135BE2E /* SharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602825556E2E5A85DA819806 /* SharedComponents.swift */; };
+		34FDF8520593118CCCA4F0A0 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B176FAC5E71A5E3869EF696 /* SearchView.swift */; };
+		391C0B0F2F4D975A005DE9B2 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391C0B0E2F4D975A005DE9B2 /* NotificationView.swift */; };
+		391D7CC32F50222D00977B58 /* CartAndWishlistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391D7CC22F50222C00977B58 /* CartAndWishlistStore.swift */; };
+		48568BC1BFBF95155BC58EBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DA0BAE7B1410C6FEB4D22C /* User.swift */; };
+		54877295BEE9F41BF738C46C /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436577C16236E3788BC85044 /* ApiResponse.swift */; };
+		5871D6C8ECD2663BFD3C0BCB /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57AEA87B6E3CDBEA386E8FE /* APIService.swift */; };
+		5A03E0B85942EB3B7D0CDD70 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6624FF4C32DEEA7F5276CE54 /* CartView.swift */; };
+		5A89895FC4F0A8CBD9F05FA3 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8129FE182113DA7B19ACE58 /* AuthManager.swift */; };
+		6F821F72F4B4A882D0636D08 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900CE3117F1F5C2629983643 /* Order.swift */; };
+		7C25B6E50F3DDE3609E62740 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E139A8B948512198753F7C8C /* ProductDetailView.swift */; };
+		7E2053965713DC1698F706DF /* GroupCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82987CD156E8067A1B7E24B3 /* GroupCreateView.swift */; };
+		92B9AF2901E5DC1BA302BD46 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD31BCD6672A7E6071CDE8B5 /* MainTabView.swift */; };
+		978770AC9ECCEB6C3F2BAA48 /* GroupPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915A44E5643BA1AF4D63AC7 /* GroupPurchase.swift */; };
+		9D9E58F34128E3815F5BACB0 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F70FE3A90C6844995B247F /* GroupDetailView.swift */; };
+		B7E85ED75634C48BC91820D5 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B13AE018FA12BCFF9AA7537 /* Cart.swift */; };
+		CBC3524AF39C67E192A9C0D9 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B2059C3DC80BCE48D57FD2 /* Product.swift */; };
+		D18AE5CF85F0A66CD5CC8888 /* NutriShareApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D0BC79D89FE78D8DAB797B /* NutriShareApp.swift */; };
+		D4FCA54685F4BF33091D5414 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D48D7640504E00253199EC /* DesignSystem.swift */; };
+		DA360F158D304283E836E482 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23C291061D4D6ADED7706B4D /* Assets.xcassets */; };
+		E4F5265BC86C865B616B69E4 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBECF5F0272C7CB16DD234 /* GroupListView.swift */; };
+		F1C88E735B6B2817C2FFF13A /* OrderCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC31129577907CF49AAFF82 /* OrderCompleteView.swift */; };
+		F95863F38BEFEB0C46C3283B /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279644206F7C44C9E6FFE786 /* MyPageView.swift */; };
+		F9BD2D7CACE839FBF0B6F0A3 /* CardComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E409B72491408A20116AD5 /* CardComponents.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0DE297CCF7BE1EBB99343F53 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		17DA0BAE7B1410C6FEB4D22C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1B176FAC5E71A5E3869EF696 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		23C291061D4D6ADED7706B4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		279644206F7C44C9E6FFE786 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		30D0BC79D89FE78D8DAB797B /* NutriShareApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriShareApp.swift; sourceTree = "<group>"; };
+		36F70FE3A90C6844995B247F /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		391C0B0E2F4D975A005DE9B2 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		391D7CC22F50222C00977B58 /* CartAndWishlistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartAndWishlistStore.swift; sourceTree = "<group>"; };
+		3B13AE018FA12BCFF9AA7537 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
+		436577C16236E3788BC85044 /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
+		5C72683E759BE4CD40892681 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		602825556E2E5A85DA819806 /* SharedComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedComponents.swift; sourceTree = "<group>"; };
+		6624FF4C32DEEA7F5276CE54 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
+		67E409B72491408A20116AD5 /* CardComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardComponents.swift; sourceTree = "<group>"; };
+		6C183E22897961FEF2DDA3F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8100368000658238DAB26AB5 /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
+		82987CD156E8067A1B7E24B3 /* GroupCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCreateView.swift; sourceTree = "<group>"; };
+		82D48D7640504E00253199EC /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		8915A44E5643BA1AF4D63AC7 /* GroupPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPurchase.swift; sourceTree = "<group>"; };
+		900CE3117F1F5C2629983643 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		9AC31129577907CF49AAFF82 /* OrderCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCompleteView.swift; sourceTree = "<group>"; };
+		B5B2059C3DC80BCE48D57FD2 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		DD31BCD6672A7E6071CDE8B5 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		E139A8B948512198753F7C8C /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		E239A804337F0CFF4415F4E9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E52558379D73D7A0D06ECCBB /* NutriShare.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NutriShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7BBECF5F0272C7CB16DD234 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
+		F57AEA87B6E3CDBEA386E8FE /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		F8129FE182113DA7B19ACE58 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0DA47A5F28A24D35C5B7976A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1B176FAC5E71A5E3869EF696 /* SearchView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		208AAA1EF67251A1F6846E32 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				279644206F7C44C9E6FFE786 /* MyPageView.swift */,
+				5C72683E759BE4CD40892681 /* ProfileEditView.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		317D8FDBDC1EDCF06CD6211B /* NutriShare */ = {
+			isa = PBXGroup;
+			children = (
+				23C291061D4D6ADED7706B4D /* Assets.xcassets */,
+				30D0BC79D89FE78D8DAB797B /* NutriShareApp.swift */,
+				B6BC65ABFC0362A03D84D151 /* Models */,
+				AD4F524ED9236DD2314A312C /* Preview Content */,
+				A04D6AF51B8CC8236B236FE1 /* Services */,
+				814F6540B542F485A1F4D100 /* Utils */,
+				9DF7E86643A84774195C8485 /* Views */,
+			);
+			path = NutriShare;
+			sourceTree = "<group>";
+		};
+		452829954E4C4E9BB8CF3547 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				E139A8B948512198753F7C8C /* ProductDetailView.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		5F9F39BE8C541B650983D441 = {
+			isa = PBXGroup;
+			children = (
+				317D8FDBDC1EDCF06CD6211B /* NutriShare */,
+				66D86B05E7D7FCE9D75355F5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		66D86B05E7D7FCE9D75355F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E52558379D73D7A0D06ECCBB /* NutriShare.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6C796CA0348E5787275BE52C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0DE297CCF7BE1EBB99343F53 /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7439F02F98A03ACC0551229D /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				82987CD156E8067A1B7E24B3 /* GroupCreateView.swift */,
+				36F70FE3A90C6844995B247F /* GroupDetailView.swift */,
+				E7BBECF5F0272C7CB16DD234 /* GroupListView.swift */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
+		79F9006F561B1E1003F9FF86 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				6624FF4C32DEEA7F5276CE54 /* CartView.swift */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		814F6540B542F485A1F4D100 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				82D48D7640504E00253199EC /* DesignSystem.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8DA97FE0F7D3E5EEC621847F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				67E409B72491408A20116AD5 /* CardComponents.swift */,
+				602825556E2E5A85DA819806 /* SharedComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9DF7E86643A84774195C8485 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				79F9006F561B1E1003F9FF86 /* Cart */,
+				BAE8FAE74BEAD8E8534A1826 /* Checkout */,
+				8DA97FE0F7D3E5EEC621847F /* Components */,
+				7439F02F98A03ACC0551229D /* Groups */,
+				FE35B8F9E90289C6FD3A0D92 /* Home */,
+				D98E8B394E3398C019F8420D /* Layout */,
+				6C796CA0348E5787275BE52C /* Login */,
+				208AAA1EF67251A1F6846E32 /* MyPage */,
+				452829954E4C4E9BB8CF3547 /* Product */,
+				0DA47A5F28A24D35C5B7976A /* Search */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A04D6AF51B8CC8236B236FE1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F57AEA87B6E3CDBEA386E8FE /* APIService.swift */,
+				F8129FE182113DA7B19ACE58 /* AuthManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AD4F524ED9236DD2314A312C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				6C183E22897961FEF2DDA3F9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B6BC65ABFC0362A03D84D151 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				436577C16236E3788BC85044 /* ApiResponse.swift */,
+				3B13AE018FA12BCFF9AA7537 /* Cart.swift */,
+				8915A44E5643BA1AF4D63AC7 /* GroupPurchase.swift */,
+				900CE3117F1F5C2629983643 /* Order.swift */,
+				B5B2059C3DC80BCE48D57FD2 /* Product.swift */,
+				17DA0BAE7B1410C6FEB4D22C /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BAE8FAE74BEAD8E8534A1826 /* Checkout */ = {
+			isa = PBXGroup;
+			children = (
+				8100368000658238DAB26AB5 /* CheckoutView.swift */,
+				9AC31129577907CF49AAFF82 /* OrderCompleteView.swift */,
+			);
+			path = Checkout;
+			sourceTree = "<group>";
+		};
+		D98E8B394E3398C019F8420D /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				DD31BCD6672A7E6071CDE8B5 /* MainTabView.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		FE35B8F9E90289C6FD3A0D92 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E239A804337F0CFF4415F4E9 /* HomeView.swift */,
+				391C0B0E2F4D975A005DE9B2 /* NotificationView.swift */,
+				391D7CC22F50222C00977B58 /* CartAndWishlistStore.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BB2C179DB067BF1FB8D3AD94 /* NutriShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84586607CF1C3B44BCADEE09 /* Build configuration list for PBXNativeTarget "NutriShare" */;
+			buildPhases = (
+				90C6C024B8C3D644ACF7E492 /* Sources */,
+				BF8BAE792D8E30CF872F8533 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NutriShare;
+			packageProductDependencies = (
+			);
+			productName = NutriShare;
+			productReference = E52558379D73D7A0D06ECCBB /* NutriShare.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		16C72D84B0F92AC9BDC544E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 9AFA21D416B627B5EE9489D8 /* Build configuration list for PBXProject "NutriShare" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5F9F39BE8C541B650983D441;
+			minimizedProjectReferenceProxies = 1;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BB2C179DB067BF1FB8D3AD94 /* NutriShare */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BF8BAE792D8E30CF872F8533 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA360F158D304283E836E482 /* Assets.xcassets in Resources */,
+				2FFD74273FFB58D6F6D57511 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		90C6C024B8C3D644ACF7E492 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5871D6C8ECD2663BFD3C0BCB /* APIService.swift in Sources */,
+				54877295BEE9F41BF738C46C /* ApiResponse.swift in Sources */,
+				5A89895FC4F0A8CBD9F05FA3 /* AuthManager.swift in Sources */,
+				391C0B0F2F4D975A005DE9B2 /* NotificationView.swift in Sources */,
+				F9BD2D7CACE839FBF0B6F0A3 /* CardComponents.swift in Sources */,
+				B7E85ED75634C48BC91820D5 /* Cart.swift in Sources */,
+				5A03E0B85942EB3B7D0CDD70 /* CartView.swift in Sources */,
+				0215CBDCDA3CB77B8A9302C0 /* CheckoutView.swift in Sources */,
+				D4FCA54685F4BF33091D5414 /* DesignSystem.swift in Sources */,
+				7E2053965713DC1698F706DF /* GroupCreateView.swift in Sources */,
+				9D9E58F34128E3815F5BACB0 /* GroupDetailView.swift in Sources */,
+				E4F5265BC86C865B616B69E4 /* GroupListView.swift in Sources */,
+				978770AC9ECCEB6C3F2BAA48 /* GroupPurchase.swift in Sources */,
+				0101C2F6DDE00423917AD88F /* HomeView.swift in Sources */,
+				129C66FFA0E67F9197FF8DA2 /* LoginView.swift in Sources */,
+				92B9AF2901E5DC1BA302BD46 /* MainTabView.swift in Sources */,
+				F95863F38BEFEB0C46C3283B /* MyPageView.swift in Sources */,
+				D18AE5CF85F0A66CD5CC8888 /* NutriShareApp.swift in Sources */,
+				6F821F72F4B4A882D0636D08 /* Order.swift in Sources */,
+				F1C88E735B6B2817C2FFF13A /* OrderCompleteView.swift in Sources */,
+				CBC3524AF39C67E192A9C0D9 /* Product.swift in Sources */,
+				7C25B6E50F3DDE3609E62740 /* ProductDetailView.swift in Sources */,
+				25BA84610435DB4E9E6A9125 /* ProfileEditView.swift in Sources */,
+				34FDF8520593118CCCA4F0A0 /* SearchView.swift in Sources */,
+				3013E4AB17DBF15A6135BE2E /* SharedComponents.swift in Sources */,
+				391D7CC32F50222D00977B58 /* CartAndWishlistStore.swift in Sources */,
+				48568BC1BFBF95155BC58EBB /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		492D83DBEA0E8B9D91E70142 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5E90D9D4B3BBC9572AD477F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"NutriShare/Preview Content\"";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NutriShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrishare.ios;
+				PRODUCT_NAME = NutriShare;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BCCE8DCEBF4309FFA71CD0E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D78851FA66C56BDFED78E2DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"NutriShare/Preview Content\"";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NutriShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrishare.ios;
+				PRODUCT_NAME = NutriShare;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84586607CF1C3B44BCADEE09 /* Build configuration list for PBXNativeTarget "NutriShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D78851FA66C56BDFED78E2DE /* Debug */,
+				5E90D9D4B3BBC9572AD477F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9AFA21D416B627B5EE9489D8 /* Build configuration list for PBXProject "NutriShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				492D83DBEA0E8B9D91E70142 /* Debug */,
+				BCCE8DCEBF4309FFA71CD0E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 16C72D84B0F92AC9BDC544E4 /* Project object */;
+}
