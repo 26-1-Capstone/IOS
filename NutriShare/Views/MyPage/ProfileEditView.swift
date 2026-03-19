@@ -5,9 +5,8 @@ struct ProfileEditView: View {
 
     @State private var nickname = ""
     @State private var email = ""
-    @State private var zipCode = ""
-    @State private var addressLine1 = ""
-    @State private var addressLine2 = ""
+    @State private var cityOrDistrict = ""
+    @State private var dong = ""
     @State private var isLoading = true
     @State private var isSaving = false
     @State private var toastMessage = ""
@@ -31,31 +30,31 @@ struct ProfileEditView: View {
                     Divider()
 
                     // Address
-                    sectionView(title: "기본 배송지 관리") {
+                    sectionView(title: "내 동네 설정") {
                         VStack(alignment: .leading, spacing: NSSpacing.md) {
-                            Text("공동구매 결제 시 식료품을 편하게 받아보실 배송지를 등록해 주세요.")
+                            Text("온보딩과 공동구매 추천에 사용할 내 동네를 입력해 주세요. 주소는 `~시 ~동` 기준으로 간단히 관리합니다.")
                                 .font(.system(size: NSFont.xs))
                                 .foregroundColor(.nsTextSecondary)
 
-                            HStack(spacing: NSSpacing.sm) {
-                                TextField("우편번호", text: $zipCode)
+                            VStack(alignment: .leading, spacing: NSSpacing.xs) {
+                                Text("시/구")
+                                    .font(.system(size: NSFont.sm, weight: .semibold))
+                                    .foregroundColor(.nsTextSecondary)
+                                TextField("예) 서울시 강남구", text: $cityOrDistrict)
                                     .textFieldStyle(.roundedBorder)
-                                    .frame(maxWidth: 120)
-                                Button("주소 찾기") {
-                                    zipCode = "06236"
-                                    addressLine1 = "서울 강남구 테헤란로 152"
-                                }
-                                .font(.system(size: NSFont.sm, weight: .medium))
-                                .foregroundColor(.nsPrimary)
-                                .padding(.horizontal, NSSpacing.md)
-                                .padding(.vertical, NSSpacing.sm)
-                                .background(Color.nsGray100)
-                                .cornerRadius(NSRadius.sm)
                             }
-                            TextField("기본 주소", text: $addressLine1)
-                                .textFieldStyle(.roundedBorder)
-                            TextField("상세 주소를 입력해주세요", text: $addressLine2)
-                                .textFieldStyle(.roundedBorder)
+
+                            VStack(alignment: .leading, spacing: NSSpacing.xs) {
+                                Text("동")
+                                    .font(.system(size: NSFont.sm, weight: .semibold))
+                                    .foregroundColor(.nsTextSecondary)
+                                TextField("예) 역삼동", text: $dong)
+                                    .textFieldStyle(.roundedBorder)
+                            }
+
+                            Text("입력한 동네를 기준으로 같은 지역 공동구매를 함께 보게 됩니다.")
+                                .font(.system(size: NSFont.xs))
+                                .foregroundColor(.nsPrimaryDark)
                         }
                     }
 
@@ -129,9 +128,8 @@ struct ProfileEditView: View {
                 await MainActor.run {
                     nickname = data.nickname ?? ""
                     email = data.email ?? ""
-                    zipCode = data.address?.zipCode ?? ""
-                    addressLine1 = data.address?.addressLine1 ?? ""
-                    addressLine2 = data.address?.addressLine2 ?? ""
+                    cityOrDistrict = data.address?.cityOrDistrict ?? ""
+                    dong = data.address?.dong ?? ""
                 }
             }
         } catch {
@@ -144,9 +142,9 @@ struct ProfileEditView: View {
         isSaving = true
         let payload = ProfileUpdateRequest(
             nickname: nickname,
-            zipCode: zipCode.isEmpty ? nil : zipCode,
-            addressLine1: addressLine1.isEmpty ? nil : addressLine1,
-            addressLine2: addressLine2.isEmpty ? nil : addressLine2
+            zipCode: nil,
+            addressLine1: cityOrDistrict.isEmpty ? nil : cityOrDistrict,
+            addressLine2: dong.isEmpty ? nil : dong
         )
 
         Task {

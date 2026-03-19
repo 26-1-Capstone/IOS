@@ -38,8 +38,8 @@ struct LoginView: View {
 
                 // Benefits
                 VStack(spacing: NSSpacing.md) {
-                    benefitRow(icon: "📦", text: "대용량 마트 상품을 소분해서 알뜰하게")
-                    benefitRow(icon: "🚚", text: "이웃과 함께사면 배송비 0원")
+                    benefitRow(symbol: "shippingbox.fill", text: "대용량 마트 상품을 소분해서 알뜰하게")
+                    benefitRow(symbol: "truck.box.fill", text: "이웃과 함께사면 배송비 0원")
                 }
                 .padding(.horizontal, NSSpacing.xxl)
                 .padding(.bottom, NSSpacing.xxxl)
@@ -220,10 +220,12 @@ struct LoginView: View {
         }
     }
 
-    private func benefitRow(icon: String, text: String) -> some View {
+    private func benefitRow(symbol: String, text: String) -> some View {
         HStack(spacing: NSSpacing.md) {
-            Text(icon)
-                .font(.system(size: 24))
+            Image(systemName: symbol)
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundColor(.nsPrimary)
+                .frame(width: 24)
             Text(text)
                 .font(.system(size: NSFont.sm))
                 .foregroundColor(.nsTextSecondary)

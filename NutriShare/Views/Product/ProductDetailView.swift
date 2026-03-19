@@ -28,7 +28,7 @@ struct ProductDetailView: View {
                                     .fill(Color.nsGray100)
                                     .aspectRatio(1, contentMode: .fill)
                                     .overlay(
-                                        Image(systemName: "leaf.fill")
+                                        Image(systemName: "photo.fill")
                                             .font(.system(size: 48))
                                             .foregroundColor(.nsGray300)
                                     )

@@ -100,7 +100,7 @@ struct GroupDetailView: View {
                             RoundedRectangle(cornerRadius: NSRadius.lg)
                                 .fill(Color.nsGray100)
                                 .overlay(
-                                    Image(systemName: "leaf.fill")
+                                    Image(systemName: "photo.fill")
                                         .font(.system(size: 34))
                                         .foregroundColor(.nsGray300)
                                 )

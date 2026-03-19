@@ -94,7 +94,7 @@ struct CheckoutView: View {
                     }
 
                     // Summary
-                    sectionCard(title: "결제 요약") {
+                    sectionCard(title: "주문 요약") {
                         VStack(spacing: NSSpacing.md) {
                             HStack {
                                 Text("상품 총액").foregroundColor(.nsTextSecondary)
@@ -110,7 +110,7 @@ struct CheckoutView: View {
                             }
                             Divider()
                             HStack {
-                                Text("최종 결제 금액")
+                                Text("예상 주문 금액")
                                     .font(.system(size: NSFont.md, weight: .bold))
                                 Spacer()
                                 PriceText(value: totalAmount, fontWeight: .bold, fontSize: NSFont.xl, color: .nsPrimaryDark)
@@ -118,9 +118,22 @@ struct CheckoutView: View {
                         }
                     }
 
+                    sectionCard(title: "결제 안내") {
+                        VStack(alignment: .leading, spacing: NSSpacing.sm) {
+                            Text("현재는 가상결제 흐름으로 주문을 테스트하고 있어요.")
+                                .font(.system(size: NSFont.sm, weight: .semibold))
+                                .foregroundColor(.nsTextPrimary)
+
+                            Text("실제 카드 결제는 진행되지 않으며, 주문 생성과 완료 화면까지의 사용자 흐름만 확인합니다.")
+                                .font(.system(size: NSFont.xs))
+                                .foregroundColor(.nsTextSecondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+
                     // Submit Button
                     Button(action: submitOrder) {
-                        Text(isSubmitting ? "주문 처리 중..." : "\(totalAmount.formatted())원 주문하기")
+                        Text(isSubmitting ? "주문 접수 중..." : "\(totalAmount.formatted())원 주문 접수하기")
                             .font(.system(size: NSFont.md, weight: .bold))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -153,7 +166,7 @@ struct CheckoutView: View {
 
     private func submitOrder() {
         guard !zipCode.isEmpty, !addressLine1.isEmpty else {
-            toastMessage = "배송지를 먼저 입력해주세요."
+            toastMessage = "주문에 사용할 배송지를 먼저 입력해주세요."
             return
         }
 
@@ -186,7 +199,7 @@ struct CheckoutView: View {
             } catch {
                 print("Order failed: \(error)")
                 await MainActor.run {
-                    toastMessage = "주문에 실패했습니다."
+                    toastMessage = "주문 접수에 실패했습니다."
                 }
             }
             await MainActor.run { isSubmitting = false }

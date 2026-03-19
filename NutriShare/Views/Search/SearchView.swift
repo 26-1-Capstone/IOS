@@ -64,8 +64,9 @@ struct SearchView: View {
                     .padding(.top, NSSpacing.base)
                 } else {
                     VStack(spacing: NSSpacing.base) {
-                        Text("🔍")
-                            .font(.system(size: 48))
+                        Image(systemName: "magnifyingglass.circle")
+                            .font(.system(size: 46, weight: .medium))
+                            .foregroundColor(.nsGray400)
                         Text("검색어를 입력해 맛있는 생필품을 찾아보세요!")
                             .font(.system(size: NSFont.sm))
                             .foregroundColor(.nsTextSecondary)

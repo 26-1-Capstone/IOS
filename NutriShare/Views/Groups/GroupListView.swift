@@ -4,6 +4,7 @@ import SwiftUI
 }
 struct GroupListView: View {
     @State private var groups: [GroupPurchase] = []
+    @State private var neighborhoodText = "내 동네 설정 필요"
     @State private var isLoading = true
 
     var body: some View {
@@ -11,8 +12,9 @@ struct GroupListView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: NSSpacing.base) {
                     HStack(spacing: 6) {
-                        Text("🤝")
-                            .font(.system(size: 24))
+                        Image(systemName: "person.2.fill")
+                            .font(.system(size: 22, weight: .semibold))
+                            .foregroundColor(.nsPrimary)
                         Text("공동구매")
                             .font(.system(size: NSFont.lg, weight: .bold))
                             .foregroundColor(.nsTextPrimary)
@@ -24,10 +26,29 @@ struct GroupListView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("함께 사면 더 저렴한 공동구매")
                             .font(.system(size: NSFont.xxl, weight: .bold))
-                        Text("진행 중인 공구를 확인하고 바로 참여해보세요.")
+                        Text("\(neighborhoodText) 기준으로 진행 중인 공구를 확인해보세요.")
                             .font(.system(size: NSFont.sm))
                             .foregroundColor(.nsTextSecondary)
                     }
+                    .padding(.horizontal, NSSpacing.base)
+
+                    HStack(spacing: NSSpacing.sm) {
+                        Image(systemName: "mappin.and.ellipse")
+                            .foregroundColor(.nsPrimary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("현재 동네")
+                                .font(.system(size: NSFont.xs, weight: .semibold))
+                                .foregroundColor(.nsTextDisabled)
+                            Text(neighborhoodText)
+                                .font(.system(size: NSFont.sm, weight: .bold))
+                                .foregroundColor(.nsTextPrimary)
+                        }
+                        Spacer()
+                    }
+                    .padding(NSSpacing.base)
+                    .background(Color.nsSurface)
+                    .cornerRadius(NSRadius.lg)
+                    .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
                     .padding(.horizontal, NSSpacing.base)
 
                     if isLoading {
@@ -36,8 +57,8 @@ struct GroupListView: View {
                             .padding(.top, NSSpacing.xxxl)
                     } else if groups.isEmpty {
                         EmptyStateView(
-                            title: "진행 중인 공동구매가 없습니다.",
-                            description: "새 공동구매를 열어서 첫 참여자를 모아보세요."
+                            title: "\(neighborhoodText)에 진행 중인 공동구매가 없습니다.",
+                            description: "새 공동구매를 열어서 같은 동네 첫 참여자를 모아보세요."
                         )
                     } else {
                         LazyVStack(spacing: NSSpacing.base) {
@@ -83,6 +104,9 @@ struct GroupListView: View {
         defer { isLoading = false }
 
         do {
+            let profileResponse: ApiResponse<UserProfile> = try await APIService.shared.get("/users/me")
+            neighborhoodText = profileResponse.data?.address?.districtDisplay ?? "내 동네 설정 필요"
+
             let response: ApiResponse<PagedData<GroupPurchase>> = try await APIService.shared.get(
                 "/groups",
                 queryItems: [URLQueryItem(name: "size", value: "50")]
@@ -90,6 +114,7 @@ struct GroupListView: View {
             groups = response.data?.content ?? []
         } catch {
             print("Failed to load groups: \(error)")
+            neighborhoodText = "내 동네 설정 필요"
             groups = []
         }
     }

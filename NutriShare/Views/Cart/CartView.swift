@@ -214,8 +214,7 @@ struct CartView: View {
             }
         }
     }
-    
-    // MARK: - Properties
+
     private var fallbackImage: some View {
         Rectangle()
             .fill(Color.nsGray100)

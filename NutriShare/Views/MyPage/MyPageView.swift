@@ -70,8 +70,9 @@ struct MyPageView: View {
                 }
             } else {
                 VStack(spacing: NSSpacing.base) {
-                    Text("🔐")
-                        .font(.system(size: 48))
+                    Image(systemName: "lock.shield")
+                        .font(.system(size: 44, weight: .semibold))
+                        .foregroundColor(.nsTextPrimary)
                     Text("로그인이 필요해요")
                         .font(.system(size: NSFont.md, weight: .semibold))
                     Text("소셜 로그인 후 마이페이지를 이용할 수 있어요.")
@@ -122,6 +123,11 @@ struct MyPageView: View {
                 Text(profile.email ?? "")
                     .font(.system(size: NSFont.sm))
                     .foregroundColor(.nsTextSecondary)
+                if let district = profile.address?.districtDisplay {
+                    Text(district)
+                        .font(.system(size: NSFont.xs, weight: .semibold))
+                        .foregroundColor(.nsPrimaryDark)
+                }
             }
 
             Spacer()
@@ -376,10 +382,12 @@ struct MyPageView: View {
                     .padding(.vertical, NSSpacing.xxxl)
             } else {
                 ForEach(participations) { p in
-                    NavigationLink(destination: GroupDetailView(groupId: p.groupPurchaseId ?? p.groupId ?? 0)) {
+                    let groupId = p.groupPurchaseId ?? p.groupId ?? 0
+
+                    NavigationLink(destination: GroupDetailView(groupId: groupId)) {
                         VStack(alignment: .leading, spacing: NSSpacing.sm) {
                             HStack {
-                                Text(p.title ?? "")
+                                Text(p.title ?? "참여한 공동구매 #\(groupId)")
                                     .font(.system(size: NSFont.base, weight: .medium))
                                     .foregroundColor(.nsTextPrimary)
                                 Spacer()
@@ -387,11 +395,24 @@ struct MyPageView: View {
                                     StatusBadgeView(status: status)
                                 }
                             }
-                            if let productName = p.productName {
-                                Text(productName)
-                                    .font(.system(size: NSFont.sm))
-                                    .foregroundColor(.nsTextSecondary)
+                            Text(p.productName ?? "상품 정보를 불러오는 중이에요.")
+                                .font(.system(size: NSFont.sm))
+                                .foregroundColor(.nsTextSecondary)
+
+                            HStack(spacing: NSSpacing.sm) {
+                                if let quantity = p.quantity {
+                                    Label("\(quantity)개 참여", systemImage: "person.fill.checkmark")
+                                        .font(.system(size: NSFont.xs, weight: .medium))
+                                        .foregroundColor(.nsPrimaryDark)
+                                }
+
+                                if let createdAt = p.createdAt {
+                                    Text(createdAt.prefix(10))
+                                        .font(.system(size: NSFont.xs))
+                                        .foregroundColor(.nsTextDisabled)
+                                }
                             }
+
                             if let current = p.currentQuantity, let target = p.targetQuantity {
                                 HStack {
                                     Text("모집 상태: \(current) / \(target)명")
@@ -422,9 +443,12 @@ struct MyPageView: View {
             async let ordersTask: ApiResponse<[OrderSummary]> = APIService.shared.get("/users/me/orders")
             async let participationsTask: ApiResponse<[Participation]> = APIService.shared.get("/users/me/participations")
             let (ordersRes, participationsRes) = try await (ordersTask, participationsTask)
+            let participationItems = participationsRes.data ?? []
+            let enrichedParticipations = await enrichParticipations(participationItems)
+
             await MainActor.run {
                 orders = ordersRes.data ?? []
-                participations = participationsRes.data ?? []
+                participations = enrichedParticipations
             }
         } catch {
             print("Failed to load mypage: \(error)")
@@ -510,6 +534,57 @@ struct MyPageView: View {
 
     private func logout() {
         authManager.removeToken()
+    }
+
+    private func enrichParticipations(_ items: [Participation]) async -> [Participation] {
+        let groupIds = Array(Set(items.compactMap { $0.groupPurchaseId ?? $0.groupId }))
+        guard !groupIds.isEmpty else { return items }
+
+        let details = await fetchGroupDetails(for: groupIds)
+
+        return items.map { item in
+            guard let groupId = item.groupPurchaseId ?? item.groupId,
+                  let detail = details[groupId] else {
+                return item
+            }
+
+            return Participation(
+                participationId: item.participationId,
+                groupPurchaseId: item.groupPurchaseId ?? groupId,
+                groupId: item.groupId ?? groupId,
+                title: item.title ?? detail.title,
+                productName: item.productName ?? detail.productName,
+                quantity: item.quantity,
+                status: item.status,
+                createdAt: item.createdAt,
+                currentQuantity: item.currentQuantity ?? detail.currentQuantity,
+                targetQuantity: item.targetQuantity ?? detail.targetQuantity
+            )
+        }
+    }
+
+    private func fetchGroupDetails(for groupIds: [Int]) async -> [Int: GroupPurchase] {
+        await withTaskGroup(of: (Int, GroupPurchase?).self, returning: [Int: GroupPurchase].self) { group in
+            for groupId in groupIds {
+                group.addTask {
+                    do {
+                        let response: ApiResponse<GroupPurchase> = try await APIService.shared.get("/groups/\(groupId)")
+                        return (groupId, response.data)
+                    } catch {
+                        print("Failed to load group detail \(groupId): \(error)")
+                        return (groupId, nil)
+                    }
+                }
+            }
+
+            var details: [Int: GroupPurchase] = [:]
+            for await (groupId, detail) in group {
+                if let detail {
+                    details[groupId] = detail
+                }
+            }
+            return details
+        }
     }
 }
 

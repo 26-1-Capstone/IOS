@@ -12,7 +12,7 @@ struct OrderCompleteView: View {
                 .font(.system(size: 72))
                 .foregroundColor(.nsSecondary)
 
-            Text("주문이 완료되었습니다!")
+            Text("주문이 접수되었어요!")
                 .font(.system(size: NSFont.xxl, weight: .bold))
                 .foregroundColor(.nsTextPrimary)
 
@@ -20,9 +20,10 @@ struct OrderCompleteView: View {
                 Text("주문 번호: \(orderId)")
                     .font(.system(size: NSFont.base, weight: .semibold))
                     .foregroundColor(.nsTextPrimary)
-                Text("빠르고 안전하게 배송해 드릴게요.")
+                Text("현재는 가상결제 기준으로 주문 흐름을 테스트하고 있습니다.")
                     .font(.system(size: NSFont.sm))
                     .foregroundColor(.nsTextSecondary)
+                    .multilineTextAlignment(.center)
             }
 
             Spacer()
@@ -41,7 +42,7 @@ struct OrderCompleteView: View {
                 }
 
                 NavigationLink(destination: HomeView()) {
-                    Text("쇼핑 계속하기")
+                    Text("홈으로 돌아가기")
                         .font(.system(size: NSFont.base, weight: .semibold))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)

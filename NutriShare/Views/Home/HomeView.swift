@@ -33,8 +33,9 @@ struct HomeView: View {
                 // Custom Header (matches web frontend)
                 HStack {
                     HStack(spacing: 6) {
-                        Text("🥦")
-                            .font(.system(size: 24))
+                        Image(systemName: "leaf.circle.fill")
+                            .font(.system(size: 22, weight: .semibold))
+                            .foregroundColor(.nsPrimary)
                         Text("NutriShare")
                             .font(.system(size: NSFont.lg, weight: .bold))
                             .foregroundColor(.nsPrimary)
@@ -118,8 +119,12 @@ struct HomeView: View {
     private var productSection: some View {
         VStack(alignment: .leading, spacing: NSSpacing.base) {
             HStack {
-                Text("🛒 NutriShare 특가 생필품")
-                    .font(.system(size: NSFont.lg, weight: .bold))
+                HStack(spacing: 8) {
+                    Image(systemName: "cart.fill")
+                        .foregroundColor(.nsPrimary)
+                    Text("NutriShare 특가 생필품")
+                        .font(.system(size: NSFont.lg, weight: .bold))
+                }
                 Spacer()
             }
             .padding(.horizontal, NSSpacing.base)

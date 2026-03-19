@@ -96,8 +96,12 @@ struct GroupCreateView: View {
 
                 // MARK: - 6. Guide
                 VStack(alignment: .leading, spacing: NSSpacing.sm) {
-                    Text("💡 공동구매 주최 가이드")
-                        .font(.system(size: NSFont.base, weight: .bold))
+                    HStack(spacing: 8) {
+                        Image(systemName: "lightbulb.fill")
+                            .foregroundColor(.nsPrimary)
+                        Text("공동구매 주최 가이드")
+                            .font(.system(size: NSFont.base, weight: .bold))
+                    }
 
                     VStack(alignment: .leading, spacing: 6) {
                         guideRow("목표 인원을 달성해야만 공동구매 주문이 확정됩니다.")
@@ -195,7 +199,7 @@ struct GroupCreateView: View {
                         image.resizable().aspectRatio(contentMode: .fill)
                     default:
                         Rectangle().fill(Color.nsGray100)
-                            .overlay(Image(systemName: "leaf.fill").foregroundColor(.nsGray300))
+                            .overlay(Image(systemName: "photo.fill").foregroundColor(.nsGray300))
                     }
                 }
                 .frame(width: 56, height: 56)
@@ -308,8 +312,12 @@ struct GroupCreateView: View {
     // MARK: - Summary Section
     private func summarySection(_ product: Product) -> some View {
         VStack(alignment: .leading, spacing: NSSpacing.md) {
-            Text("📋 모집 요약")
-                .font(.system(size: NSFont.base, weight: .bold))
+            HStack(spacing: 8) {
+                Image(systemName: "list.bullet.clipboard")
+                    .foregroundColor(.nsSecondaryDark)
+                Text("모집 요약")
+                    .font(.system(size: NSFont.base, weight: .bold))
+            }
 
             VStack(spacing: NSSpacing.sm) {
                 summaryRow("상품", product.name)

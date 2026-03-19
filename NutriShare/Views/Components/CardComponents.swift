@@ -105,8 +105,8 @@ struct ProductCardView: View {
             .fill(Color.nsGray100)
             .aspectRatio(1, contentMode: .fill)
             .overlay(
-                Image(systemName: "leaf.fill")
-                    .font(.system(size: 32))
+                Image(systemName: "photo.fill")
+                    .font(.system(size: 28))
                     .foregroundColor(.nsGray300)
             )
     }
