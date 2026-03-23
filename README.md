@@ -1,37 +1,66 @@
 # NutriShare iOS
 
-NutriShare의 iOS 프론트엔드 프로젝트입니다.  
+NutriShare의 iOS 프로젝트입니다.  
 SwiftUI 기반으로 구성되어 있고, 로컬 백엔드와 연동해 홈, 공동구매, 장바구니, 마이페이지 화면을 테스트할 수 있습니다.
 
-## Requirements
+---
 
-- Xcode 15+
-- iOS 16.0+
-- 실행 중인 로컬 백엔드
+## 스크린샷
+
+### 홈 & 상품 상세
+
+| 홈 | 상품 상세 |
+|:---:|:---:|
+| <img src="Home.png" width="220"/> | <img src="DetailPage.png" width="220"/> |
+
+### 공동구매
+
+| 공동구매 목록 | 공동구매 열기 (상품 선택) | 공동구매 열기 (조건 설정) |
+|:---:|:---:|:---:|
+| <img src="groupbuy.png" width="200"/> | <img src="Open.png" width="200"/> | <img src="Open2.png" width="200"/> |
+
+### 장바구니 & 주문
+
+| 장바구니 | 주문 |
+|:---:|:---:|
+| <img src="cart.png" width="220"/> | <img src="order.png" width="220"/> |
+
+### 마이페이지
+
+| MY | 주문 내역 | 리뷰 | 참여공구 |
+|:---:|:---:|:---:|:---:|
+| <img src="MyPage_Order.png" width="180"/> | <img src="MyPage_Order.png" width="180"/> | <img src="MyPage_Review.png" width="180"/> | <img src="MyPage_.png" width="180"/> |
+
+### 알림 & 프로필 수정
+
+| 알림 | 프로필 수정 |
+|:---:|:---:|
+| <img src="Noti.png" width="220"/> | <img src="profile_Edit.png" width="220"/> |
+
+---
 
 ## Run
 
-1. 백엔드를 먼저 실행합니다.
+1. 백엔드를 먼저 실행합니다.  
    현재 기본 API Base URL은 `http://localhost:8080/api/v1` 입니다.
 
 2. Xcode에서 아래 프로젝트를 엽니다.
-   `NutriShare.xcodeproj`
+   ```
+   NutriShare.xcodeproj
+   ```
 
-3. iOS Simulator를 선택한 뒤 실행합니다.
+3. 상단 툴바에서 iOS Simulator 를 선택한 뒤 실행합니다.  
+   > "A build only device cannot be used to run this target" 오류가 뜨면 실제 기기 대신 시뮬레이터를 destination으로 선택해주세요.
+
+---
 
 ## Project Structure
 
-- `NutriShare/Views`
-  화면 단위 SwiftUI 뷰
-- `NutriShare/Models`
-  API 응답 및 앱 모델
-- `NutriShare/Services`
-  네트워크 및 인증 처리
-- `NutriShare/Utils`
-  디자인 시스템 및 공용 유틸
+```
+NutriShare/
+├── Views/        # 화면 단위 SwiftUI 뷰
+├── Models/       # API 응답 및 앱 모델
+├── Services/     # 네트워크 및 인증 처리
+└── Utils/        # 디자인 시스템 및 공용 유틸
+```
 
-## Notes
-
-- 로그인은 현재 개발용 `dev-login` 흐름으로 테스트합니다.
-- 일부 기능은 백엔드 스펙 상태에 따라 동작이 제한될 수 있습니다.
-- 상품/공동구매 이미지는 현재 백엔드에서 `imageUrl`을 내려주지 않으면 기본 플레이스홀더로 표시됩니다.
