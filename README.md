@@ -11,31 +11,31 @@ SwiftUI 기반으로 구성되어 있고, 로컬 백엔드와 연동해 홈, 공
 
 | 홈 | 상품 상세 |
 |:---:|:---:|
-| <img src="Home.png" width="220"/> | <img src="DetailPage.png" width="220"/> |
-
+| <img src="iOS_UI/Home.png" width="220"/> | <img src="iOS_UI/DetailPage.png" width="220"/> |
+ 
 ### 공동구매
-
+ 
 | 공동구매 목록 | 공동구매 열기 (상품 선택) | 공동구매 열기 (조건 설정) |
 |:---:|:---:|:---:|
-| <img src="groupbuy.png" width="200"/> | <img src="Open.png" width="200"/> | <img src="Open2.png" width="200"/> |
-
+| <img src="iOS_UI/groupbuy.png" width="200"/> | <img src="iOS_UI/Open.png" width="200"/> | <img src="iOS_UI/Open2.png" width="200"/> |
+ 
 ### 장바구니 & 주문
-
+ 
 | 장바구니 | 주문 |
 |:---:|:---:|
-| <img src="cart.png" width="220"/> | <img src="order.png" width="220"/> |
-
+| <img src="iOS_UI/cart.png" width="220"/> | <img src="iOS_UI/order.png" width="220"/> |
+ 
 ### 마이페이지
-
+ 
 | MY | 주문 내역 | 리뷰 | 참여공구 |
 |:---:|:---:|:---:|:---:|
-| <img src="MyPage_Order.png" width="180"/> | <img src="MyPage_Order.png" width="180"/> | <img src="MyPage_Review.png" width="180"/> | <img src="MyPage_.png" width="180"/> |
-
+| <img src="iOS_UI/MyPage_Order.png" width="180"/> | <img src="iOS_UI/MyPage_Order.png" width="180"/> | <img src="iOS_UI/MyPage_Review.png" width="180"/> | <img src="iOS_UI/MyPage_.png" width="180"/> |
+ 
 ### 알림 & 프로필 수정
-
+ 
 | 알림 | 프로필 수정 |
 |:---:|:---:|
-| <img src="Noti.png" width="220"/> | <img src="profile_Edit.png" width="220"/> |
+| <img src="iOS_UI/Noti.png" width="220"/> | <img src="iOS_UI/profile_Edit.png" width="220"/> |
 
 ---
 
