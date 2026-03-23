@@ -5,6 +5,7 @@ struct GroupDetailView: View {
 
     @State private var group: GroupPurchase?
     @State private var isLoading = true
+    @State private var isJoining = false
     @State private var remainingText = ""
     @State private var quantity = 1
     @State private var toastMessage = ""
@@ -240,15 +241,21 @@ struct GroupDetailView: View {
             }
 
             Button(action: handleJoinTap) {
-                Text(isClosed ? "마감된 공동구매" : "이 공동구매 참여하기")
-                    .font(.system(size: NSFont.base, weight: .bold))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, NSSpacing.md)
-                    .background(isClosed ? Color.nsGray400 : Color.nsPrimary)
-                    .cornerRadius(NSRadius.md)
+                Group {
+                    if isJoining {
+                        ProgressView().tint(.white)
+                    } else {
+                        Text(isClosed ? "마감된 공동구매" : "이 공동구매 참여하기")
+                            .font(.system(size: NSFont.base, weight: .bold))
+                            .foregroundColor(.white)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, NSSpacing.md)
+                .background(isClosed ? Color.nsGray400 : Color.nsPrimary)
+                .cornerRadius(NSRadius.md)
             }
-            .disabled(isClosed)
+            .disabled(isClosed || isJoining)
         }
         .padding(.horizontal, NSSpacing.base)
         .padding(.top, NSSpacing.md)
@@ -329,7 +336,30 @@ struct GroupDetailView: View {
     }
 
     private func handleJoinTap() {
-        toastMessage = "참여 기능은 아직 연결 중입니다."
+        Task { await joinGroup() }
+    }
+
+    @MainActor
+    private func joinGroup() async {
+        isJoining = true
+        defer { isJoining = false }
+
+        struct JoinRequest: Encodable {
+            let quantity: Int
+        }
+
+        do {
+            let _: ApiResponse<ResourceResponse> = try await APIService.shared.post(
+                "/groups/\(groupId)/join",
+                body: JoinRequest(quantity: quantity)
+            )
+            toastMessage = "참여가 완료되었습니다! 🎉"
+            // 현황 갱신
+            await loadGroupDetail()
+        } catch {
+            toastMessage = "참여에 실패했습니다. 다시 시도해주세요."
+            print("Join failed: \(error)")
+        }
     }
 
     private func updateCountdown() {

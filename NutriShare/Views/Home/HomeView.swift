@@ -2,7 +2,6 @@ import SwiftUI
 #Preview {
     HomeView()
         .environmentObject(CartStore())
-        .environmentObject(WishlistStore())
 }
 struct HomeView: View {
     @State private var products: [Product] = []

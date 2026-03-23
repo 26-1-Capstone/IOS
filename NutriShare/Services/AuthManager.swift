@@ -12,6 +12,10 @@ class AuthManager: ObservableObject {
     @Published var isAuthenticated: Bool = false
 
     private init() {
+        if !UserDefaults.standard.bool(forKey: "hasLaunchedBefore") {
+            removeToken()
+            UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+        }
         migrateTokenIfNeeded()
         self.isAuthenticated = getToken() != nil
     }

@@ -67,19 +67,3 @@ final class CartStore: ObservableObject {
         productIds.contains(product.id)
     }
 }
-
-final class WishlistStore: ObservableObject {
-    @Published private(set) var productIds: Set<Int> = []
-
-    func toggle(_ product: StoreProduct) {
-        if productIds.contains(product.id) {
-            productIds.remove(product.id)
-        } else {
-            productIds.insert(product.id)
-        }
-    }
-
-    func contains(_ product: StoreProduct) -> Bool {
-        productIds.contains(product.id)
-    }
-}

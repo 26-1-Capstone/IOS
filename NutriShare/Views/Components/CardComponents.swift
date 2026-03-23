@@ -4,7 +4,6 @@ import SwiftUI
 struct ProductCardView: View {
     let product: Product
     @EnvironmentObject private var cartStore: CartStore
-    @EnvironmentObject private var wishlistStore: WishlistStore
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -36,23 +35,6 @@ struct ProductCardView: View {
                         .background(Color.black.opacity(0.5))
                         .cornerRadius(NSRadius.sm)
                         .padding(8)
-                }
-                
-                // Favorite Button
-                VStack {
-                    HStack {
-                        Spacer()
-                        let isFav = wishlistStore.contains(StoreProduct(id: product.id))
-                        Image(systemName: isFav ? "heart.fill" : "heart")
-                            .font(.system(size: 20))
-                            .foregroundColor(isFav ? .nsError : .white)
-                            .shadow(radius: 2, y: 1)
-                            .padding(8)
-                            .onTapGesture {
-                                wishlistStore.toggle(StoreProduct(id: product.id))
-                            }
-                    }
-                    Spacer()
                 }
             }
 

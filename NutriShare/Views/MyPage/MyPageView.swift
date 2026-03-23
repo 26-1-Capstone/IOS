@@ -18,7 +18,8 @@ struct MyPageView: View {
     @State private var activeTab: MyPageTab = .orders
     @State private var reviewRatings: [Int: Int] = [:]
     @State private var reviewTexts: [Int: String] = [:]
-    @State private var completedReviewOrderIds: Set<Int> = []
+    @State private var completedReviewParticipationIds: Set<Int> = []
+    @State private var isSubmittingReview = false
     
     @State private var showingErrorAlert = false
     @State private var errorMessage = ""
@@ -226,14 +227,14 @@ struct MyPageView: View {
         VStack(spacing: NSSpacing.md) {
             reviewSummaryCard
 
-            if reviewableOrders.isEmpty {
+            if participations.isEmpty {
                 EmptyStateView(
                     title: "작성할 리뷰가 없습니다.",
-                    description: "배송 완료된 주문이 생기면 이곳에서 리뷰를 관리할 수 있어요."
+                    description: "공동구매에 참여하면 이곳에서 리뷰를 관리할 수 있어요."
                 )
             } else {
-                ForEach(reviewableOrders) { order in
-                    reviewCard(for: order)
+                ForEach(participations) { p in
+                    reviewCard(for: p)
                 }
             }
         }
@@ -246,19 +247,19 @@ struct MyPageView: View {
                 .font(.system(size: NSFont.base, weight: .bold))
                 .foregroundColor(.nsTextPrimary)
 
-            Text("배송 완료 주문만 리뷰를 남길 수 있어요.")
+            Text("참여한 공동구매의 리뷰를 남겨보세요.")
                 .font(.system(size: NSFont.sm))
                 .foregroundColor(.nsTextSecondary)
 
             HStack(spacing: NSSpacing.sm) {
                 reviewStatPill(
                     title: "작성 가능",
-                    value: reviewPendingOrders.count,
+                    value: participations.filter { !completedReviewParticipationIds.contains($0.participationId) }.count,
                     tint: .nsPrimary
                 )
                 reviewStatPill(
                     title: "작성 완료",
-                    value: reviewCompletedOrders.count,
+                    value: completedReviewParticipationIds.count,
                     tint: .nsSecondaryDark
                 )
             }
@@ -270,42 +271,54 @@ struct MyPageView: View {
         .shadow(color: .black.opacity(0.04), radius: 4, y: 2)
     }
 
-    private func reviewCard(for order: OrderSummary) -> some View {
-        VStack(alignment: .leading, spacing: NSSpacing.sm) {
+    private func reviewCard(for participation: Participation) -> some View {
+        let pid = participation.participationId
+        let isCompleted = completedReviewParticipationIds.contains(pid)
+
+        return VStack(alignment: .leading, spacing: NSSpacing.sm) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(order.summary ?? "주문 상품")
+                    Text(participation.title ?? participation.productName ?? "공동구매 상품")
                         .font(.system(size: NSFont.base, weight: .semibold))
                         .foregroundColor(.nsTextPrimary)
-                    Text(order.orderDate ?? order.createdAt ?? "")
+                    Text(participation.createdAt?.prefix(10).description ?? "")
                         .font(.system(size: NSFont.xs))
                         .foregroundColor(.nsTextSecondary)
-                    Text("주문번호 \(order.orderId)")
-                        .font(.system(size: NSFont.xs))
-                        .foregroundColor(.nsTextDisabled)
+                    if let status = participation.status {
+                        Text("상태: \(status)")
+                            .font(.system(size: NSFont.xs))
+                            .foregroundColor(.nsTextDisabled)
+                    }
                 }
                 Spacer()
-                reviewStatusBadge(for: order)
+                Text(isCompleted ? "작성 완료" : "작성 가능")
+                    .font(.system(size: NSFont.xs, weight: .bold))
+                    .foregroundColor(isCompleted ? .nsSecondaryDark : .nsPrimaryDark)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background((isCompleted ? Color.nsSecondary : Color.nsPrimary).opacity(0.18))
+                    .cornerRadius(NSRadius.sm)
             }
 
             HStack(spacing: 4) {
                 ForEach(1...5, id: \.self) { score in
                     Button(action: {
-                        reviewRatings[order.orderId] = score
+                        reviewRatings[pid] = score
                     }) {
-                        Image(systemName: (reviewRatings[order.orderId] ?? 0) >= score ? "star.fill" : "star")
+                        Image(systemName: (reviewRatings[pid] ?? 0) >= score ? "star.fill" : "star")
                             .font(.system(size: 16))
                             .foregroundColor(.nsPrimary)
                     }
                     .buttonStyle(.plain)
+                    .disabled(isCompleted)
                 }
             }
 
             TextField(
                 "상품은 만족스러웠나요? 후기를 남겨주세요.",
                 text: Binding(
-                    get: { reviewTexts[order.orderId] ?? "" },
-                    set: { reviewTexts[order.orderId] = $0 }
+                    get: { reviewTexts[pid] ?? "" },
+                    set: { reviewTexts[pid] = $0 }
                 ),
                 axis: .vertical
             )
@@ -313,30 +326,28 @@ struct MyPageView: View {
             .padding(NSSpacing.sm)
             .background(Color.nsGray100)
             .cornerRadius(NSRadius.sm)
+            .disabled(isCompleted)
 
             HStack {
-                if completedReviewOrderIds.contains(order.orderId) {
-                    Text("현재는 앱 내부 임시 저장만 지원합니다.")
-                        .font(.system(size: NSFont.xs))
-                        .foregroundColor(.nsTextSecondary)
-                } else {
-                    Text("별점과 간단한 후기를 남겨보세요.")
-                        .font(.system(size: NSFont.xs))
-                        .foregroundColor(.nsTextSecondary)
-                }
+                Text(isCompleted ? "리뷰가 등록되었습니다." : "별점과 간단한 후기를 남겨보세요.")
+                    .font(.system(size: NSFont.xs))
+                    .foregroundColor(.nsTextSecondary)
                 Spacer()
-                Button(action: {
-                    submitReview(for: order)
-                }) {
-                    Text(completedReviewOrderIds.contains(order.orderId) ? "수정 저장" : "리뷰 등록")
-                        .font(.system(size: NSFont.xs, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, NSSpacing.md)
-                        .padding(.vertical, 7)
-                        .background(Color.nsPrimary)
-                        .cornerRadius(NSRadius.sm)
+                if !isCompleted {
+                    Button(action: {
+                        submitReview(for: participation)
+                    }) {
+                        Text(isSubmittingReview ? "등록 중..." : "리뷰 등록")
+                            .font(.system(size: NSFont.xs, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, NSSpacing.md)
+                            .padding(.vertical, 7)
+                            .background(isSubmittingReview ? Color.nsGray400 : Color.nsPrimary)
+                            .cornerRadius(NSRadius.sm)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isSubmittingReview)
                 }
-                .buttonStyle(.plain)
             }
         }
         .padding(NSSpacing.base)
@@ -358,18 +369,6 @@ struct MyPageView: View {
         .padding(NSSpacing.md)
         .background(tint.opacity(0.08))
         .cornerRadius(NSRadius.md)
-    }
-
-    private func reviewStatusBadge(for order: OrderSummary) -> some View {
-        let isCompleted = completedReviewOrderIds.contains(order.orderId)
-
-        return Text(isCompleted ? "작성 완료" : "작성 가능")
-            .font(.system(size: NSFont.xs, weight: .bold))
-            .foregroundColor(isCompleted ? .nsSecondaryDark : .nsPrimaryDark)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background((isCompleted ? Color.nsSecondary : Color.nsPrimary).opacity(0.18))
-            .cornerRadius(NSRadius.sm)
     }
 
     // MARK: - Participations
@@ -456,39 +455,51 @@ struct MyPageView: View {
         await MainActor.run { isLoading = false }
     }
 
-    private var reviewableOrders: [OrderSummary] {
-        orders.filter { isReviewEligible($0) }
-    }
+    private func submitReview(for participation: Participation) {
+        let pid = participation.participationId
 
-    private var reviewPendingOrders: [OrderSummary] {
-        reviewableOrders.filter { !completedReviewOrderIds.contains($0.orderId) }
-    }
-
-    private var reviewCompletedOrders: [OrderSummary] {
-        reviewableOrders.filter { completedReviewOrderIds.contains($0.orderId) }
-    }
-
-    private func isReviewEligible(_ order: OrderSummary) -> Bool {
-        guard let status = order.status?.uppercased() else { return false }
-        return status == "DELIVERED"
-    }
-
-    private func submitReview(for order: OrderSummary) {
-        guard (reviewRatings[order.orderId] ?? 0) > 0 else {
+        guard (reviewRatings[pid] ?? 0) > 0 else {
             errorMessage = "별점을 선택해주세요."
             showingErrorAlert = true
             return
         }
 
-        let trimmedText = (reviewTexts[order.orderId] ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedText = (reviewTexts[pid] ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedText.isEmpty else {
             errorMessage = "리뷰 내용을 입력해주세요."
             showingErrorAlert = true
             return
         }
 
-        reviewTexts[order.orderId] = trimmedText
-        completedReviewOrderIds.insert(order.orderId)
+        struct ReviewUpsertRequest: Encodable {
+            let participationId: Int
+            let rating: Int
+            let comment: String
+        }
+
+        isSubmittingReview = true
+        Task {
+            do {
+                let _: ApiResponse<ResourceResponse> = try await APIService.shared.post(
+                    "/users/me/reviews",
+                    body: ReviewUpsertRequest(
+                        participationId: pid,
+                        rating: reviewRatings[pid]!,
+                        comment: trimmedText
+                    )
+                )
+                await MainActor.run {
+                    completedReviewParticipationIds.insert(pid)
+                }
+            } catch {
+                print("Failed to submit review: \(error)")
+                await MainActor.run {
+                    errorMessage = "리뷰 등록에 실패했습니다."
+                    showingErrorAlert = true
+                }
+            }
+            await MainActor.run { isSubmittingReview = false }
+        }
     }
 
     private func cancelOrder(orderId: Int) async {

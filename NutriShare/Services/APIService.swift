@@ -7,7 +7,7 @@ class APIService {
     private let session: URLSession
     private let decoder: JSONDecoder
     private let enableNetworkLogging = true
-    private let baseURL: String
+    let baseURL: String
 
     private init() {
         let config = URLSessionConfiguration.default
@@ -142,6 +142,12 @@ class APIService {
         url: URL
     ) throws -> T {
         if let preview = responsePreview(data), preview.hasPrefix("<") {
+            // Spring Security might redirect to a login page if the token is invalid/missing instead of returning 401.
+            if preview.contains("login") || preview.contains("<!DOCTYPE html>") {
+                AuthManager.shared.removeToken()
+                throw APIError.unauthorized
+            }
+            
             throw APIError.nonJSONResponse(
                 statusCode: response.statusCode,
                 url: url.absoluteString,

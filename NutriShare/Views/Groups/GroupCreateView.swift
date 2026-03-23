@@ -392,6 +392,7 @@ struct GroupCreateView: View {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         let endAtStr = dateFormatter.string(from: dueDate)
 
         isSubmitting = true
@@ -400,6 +401,7 @@ struct GroupCreateView: View {
                 let payload = GroupCreateRequest(
                     productId: productId,
                     title: title,
+                    description: nil,
                     targetQuantity: qty,
                     unitPrice: unitPrice,
                     endAt: endAtStr

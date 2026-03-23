@@ -14,6 +14,7 @@
 		2FFD74273FFB58D6F6D57511 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C183E22897961FEF2DDA3F9 /* Preview Assets.xcassets */; };
 		3013E4AB17DBF15A6135BE2E /* SharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602825556E2E5A85DA819806 /* SharedComponents.swift */; };
 		34FDF8520593118CCCA4F0A0 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B176FAC5E71A5E3869EF696 /* SearchView.swift */; };
+		390B62592F7141020000CAB3 /* LoginWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390B62582F7141020000CAB3 /* LoginWebView.swift */; };
 		391C0B0F2F4D975A005DE9B2 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391C0B0E2F4D975A005DE9B2 /* NotificationView.swift */; };
 		391D7CC32F50222D00977B58 /* CartAndWishlistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391D7CC22F50222C00977B58 /* CartAndWishlistStore.swift */; };
 		48568BC1BFBF95155BC58EBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DA0BAE7B1410C6FEB4D22C /* User.swift */; };
@@ -46,6 +47,7 @@
 		279644206F7C44C9E6FFE786 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		30D0BC79D89FE78D8DAB797B /* NutriShareApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriShareApp.swift; sourceTree = "<group>"; };
 		36F70FE3A90C6844995B247F /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		390B62582F7141020000CAB3 /* LoginWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebView.swift; sourceTree = "<group>"; };
 		391C0B0E2F4D975A005DE9B2 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		391D7CC22F50222C00977B58 /* CartAndWishlistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartAndWishlistStore.swift; sourceTree = "<group>"; };
 		3B13AE018FA12BCFF9AA7537 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		6C796CA0348E5787275BE52C /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				390B62582F7141020000CAB3 /* LoginWebView.swift */,
 				0DE297CCF7BE1EBB99343F53 /* LoginView.swift */,
 			);
 			path = Login;
@@ -324,6 +327,7 @@
 				978770AC9ECCEB6C3F2BAA48 /* GroupPurchase.swift in Sources */,
 				0101C2F6DDE00423917AD88F /* HomeView.swift in Sources */,
 				129C66FFA0E67F9197FF8DA2 /* LoginView.swift in Sources */,
+				390B62592F7141020000CAB3 /* LoginWebView.swift in Sources */,
 				92B9AF2901E5DC1BA302BD46 /* MainTabView.swift in Sources */,
 				F95863F38BEFEB0C46C3283B /* MyPageView.swift in Sources */,
 				D18AE5CF85F0A66CD5CC8888 /* NutriShareApp.swift in Sources */,

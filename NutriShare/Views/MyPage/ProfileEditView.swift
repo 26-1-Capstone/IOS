@@ -78,7 +78,9 @@ struct ProfileEditView: View {
                             Text("탈퇴 시 참여 중인 공동구매 내역이 모두 취소됩니다.")
                                 .font(.system(size: NSFont.xs))
                                 .foregroundColor(.nsTextSecondary)
-                            Button("탈퇴하기") {}
+                            Button("탈퇴하기") {
+                                toastMessage = "회원 탈퇴 기능은 준비 중입니다."
+                            }
                                 .font(.system(size: NSFont.sm, weight: .medium))
                                 .foregroundColor(.nsError)
                                 .padding(.horizontal, NSSpacing.base)

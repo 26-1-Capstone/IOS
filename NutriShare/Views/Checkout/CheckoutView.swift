@@ -120,11 +120,11 @@ struct CheckoutView: View {
 
                     sectionCard(title: "결제 안내") {
                         VStack(alignment: .leading, spacing: NSSpacing.sm) {
-                            Text("현재는 가상결제 흐름으로 주문을 테스트하고 있어요.")
+                            Text("주문 접수 후 가상결제(MOCK)로 자동 처리됩니다.")
                                 .font(.system(size: NSFont.sm, weight: .semibold))
                                 .foregroundColor(.nsTextPrimary)
 
-                            Text("실제 카드 결제는 진행되지 않으며, 주문 생성과 완료 화면까지의 사용자 흐름만 확인합니다.")
+                            Text("실제 카드 정보를 입력하지 않아도 주문 및 결제 흐름이 정상적으로 완료됩니다.")
                                 .font(.system(size: NSFont.xs))
                                 .foregroundColor(.nsTextSecondary)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -186,18 +186,40 @@ struct CheckoutView: View {
                 )
             }
         )
+        let amount = totalAmount
 
         Task {
             do {
-                let response: ApiResponse<ResourceResponse> = try await APIService.shared.post("/orders", body: payload)
-                if let orderId = response.data?.resourceId {
-                    await MainActor.run {
-                        completedOrderId = orderId
-                        showComplete = true
-                    }
+                // 1. 주문 생성
+                let orderResponse: ApiResponse<ResourceResponse> = try await APIService.shared.post("/orders", body: payload)
+                guard let orderId = orderResponse.data?.resourceId else {
+                    throw APIError.invalidResponse
+                }
+
+                // 2. 결제 확정 (MOCK)
+                struct PaymentConfirmRequest: Encodable {
+                    let orderId: Int
+                    let amount: Int
+                    let paymentProvider: String
+                    let providerPaymentKey: String
+                }
+                let payKey = "MOCK-\(orderId)-\(Int(Date().timeIntervalSince1970))"
+                let _: ApiResponse<ResourceResponse> = try await APIService.shared.post(
+                    "/payments/confirm",
+                    body: PaymentConfirmRequest(
+                        orderId: orderId,
+                        amount: amount,
+                        paymentProvider: "MOCK",
+                        providerPaymentKey: payKey
+                    )
+                )
+
+                await MainActor.run {
+                    completedOrderId = orderId
+                    showComplete = true
                 }
             } catch {
-                print("Order failed: \(error)")
+                print("Order/Payment failed: \(error)")
                 await MainActor.run {
                     toastMessage = "주문 접수에 실패했습니다."
                 }
