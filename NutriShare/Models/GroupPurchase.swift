@@ -13,6 +13,8 @@ struct GroupPurchase: Codable, Identifiable {
     let description: String?
     let productId: Int?
     let status: String?
+    let dong: String?
+    let ownerId: Int?
 }
 
 struct GroupCreateRequest: Encodable {
@@ -35,6 +37,13 @@ struct Participation: Codable, Identifiable {
     let createdAt: String?
     let currentQuantity: Int?
     let targetQuantity: Int?
+    let groupStatus: String?
+    let hostId: Int?
+    let hostNickname: String?
+    let reviewEligible: Bool?
+    let reviewed: Bool?
+    let reviewRating: Int?
+    let reviewComment: String?
 
     var id: Int { participationId }
 }

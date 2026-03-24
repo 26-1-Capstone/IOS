@@ -125,7 +125,8 @@ struct ProfileEditView: View {
             nickname: nickname,
             zipCode: nil,
             addressLine1: cityOrDistrict.isEmpty ? nil : cityOrDistrict,
-            addressLine2: dong.isEmpty ? nil : dong
+            addressLine2: nil,
+            dong: dong.isEmpty ? nil : dong
         )
 
         Task {

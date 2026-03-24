@@ -443,11 +443,28 @@ struct MyPageView: View {
             async let participationsTask: ApiResponse<[Participation]> = APIService.shared.get("/users/me/participations")
             let (ordersRes, participationsRes) = try await (ordersTask, participationsTask)
             let participationItems = participationsRes.data ?? []
-            let enrichedParticipations = await enrichParticipations(participationItems)
+
+            // 백엔드가 이미 title, productName, currentQuantity, targetQuantity를 제공
+            // 누락된 경우에만 enrichParticipations로 보완
+            let needsEnrich = participationItems.contains { $0.title == nil || $0.productName == nil }
+            let finalParticipations = needsEnrich ? await enrichParticipations(participationItems) : participationItems
 
             await MainActor.run {
                 orders = ordersRes.data ?? []
-                participations = enrichedParticipations
+                participations = finalParticipations
+
+                // 백엔드에서 reviewed/reviewRating/reviewComment 제공 시 프리로드
+                for p in finalParticipations {
+                    if p.reviewed == true {
+                        completedReviewParticipationIds.insert(p.participationId)
+                    }
+                    if let rating = p.reviewRating, rating > 0 {
+                        reviewRatings[p.participationId] = rating
+                    }
+                    if let comment = p.reviewComment, !comment.isEmpty {
+                        reviewTexts[p.participationId] = comment
+                    }
+                }
             }
         } catch {
             print("Failed to load mypage: \(error)")
@@ -569,7 +586,14 @@ struct MyPageView: View {
                 status: item.status,
                 createdAt: item.createdAt,
                 currentQuantity: item.currentQuantity ?? detail.currentQuantity,
-                targetQuantity: item.targetQuantity ?? detail.targetQuantity
+                targetQuantity: item.targetQuantity ?? detail.targetQuantity,
+                groupStatus: item.groupStatus,
+                hostId: item.hostId,
+                hostNickname: item.hostNickname,
+                reviewEligible: item.reviewEligible,
+                reviewed: item.reviewed,
+                reviewRating: item.reviewRating,
+                reviewComment: item.reviewComment
             )
         }
     }

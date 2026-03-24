@@ -13,9 +13,9 @@ struct UserAddress: Codable {
     let zipCode: String?
     let addressLine1: String?
     let addressLine2: String?
+    let dong: String?
 
     var cityOrDistrict: String? { addressLine1 }
-    var dong: String? { addressLine2 }
     var districtDisplay: String? {
         let raw = addressLine1?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         guard !raw.isEmpty else { return nil }
@@ -60,4 +60,5 @@ struct ProfileUpdateRequest: Encodable {
     let zipCode: String?
     let addressLine1: String?
     let addressLine2: String?
+    let dong: String?
 }
