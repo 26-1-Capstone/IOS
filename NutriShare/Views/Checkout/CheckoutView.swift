@@ -148,7 +148,7 @@ struct CheckoutView: View {
             .background(Color.nsBg)
             .navigationTitle("주문")
             .navigationBarTitleDisplayMode(.inline)
-            .toast($toastMessage)
+            .toast($toastMessage, type: .error)
         }
     }
 
@@ -219,9 +219,8 @@ struct CheckoutView: View {
                     showComplete = true
                 }
             } catch {
-                print("Order/Payment failed: \(error)")
                 await MainActor.run {
-                    toastMessage = "주문 접수에 실패했습니다."
+                    toastMessage = error.localizedDescription
                 }
             }
             await MainActor.run { isSubmitting = false }

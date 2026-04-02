@@ -5,6 +5,7 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var authManager: AuthManager
     @State private var isLoading = false
+    @State private var errorToastMessage = ""
     
     // WebView Auth States
     @State private var showingWebView = false
@@ -92,6 +93,12 @@ struct LoginView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, NSSpacing.xxl)
                     .padding(.bottom, NSSpacing.xxl)
+
+                Text("현재 서버: \(APIService.shared.baseURL)")
+                    .font(.system(size: NSFont.xs))
+                    .foregroundColor(.nsTextDisabled)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, NSSpacing.xxl)
             }
 
             if isLoading {
@@ -101,6 +108,7 @@ struct LoginView: View {
                     .scaleEffect(1.5)
             }
         }
+        .toast($errorToastMessage, type: .error)
         .fullScreenCover(isPresented: $showingWebView) {
             if let targetUrl = authRequestUrl {
                 ZStack(alignment: .topTrailing) {
@@ -112,6 +120,10 @@ struct LoginView: View {
                         },
                         onCancel: {
                             showingWebView = false
+                        },
+                        onError: { message in
+                            showingWebView = false
+                            errorToastMessage = message
                         }
                     )
                     .edgesIgnoringSafeArea(.bottom)
@@ -196,7 +208,9 @@ struct LoginView: View {
                     authManager.setToken(token)
                 }
             } catch {
-                print("Login failed: \(error.localizedDescription)")
+                await MainActor.run {
+                    errorToastMessage = error.localizedDescription
+                }
             }
 
             await MainActor.run { isLoading = false }

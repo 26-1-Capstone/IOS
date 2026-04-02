@@ -10,6 +10,7 @@ struct ProfileEditView: View {
     @State private var isLoading = true
     @State private var isSaving = false
     @State private var toastMessage = ""
+    @State private var errorToastMessage = ""
 
     var body: some View {
         if isLoading {
@@ -77,6 +78,7 @@ struct ProfileEditView: View {
             .navigationTitle("프로필 수정")
             .navigationBarTitleDisplayMode(.inline)
             .toast($toastMessage, type: .success)
+            .toast($errorToastMessage, type: .error)
         }
     }
 
@@ -114,7 +116,9 @@ struct ProfileEditView: View {
                 }
             }
         } catch {
-            print("Failed to load profile: \(error)")
+            await MainActor.run {
+                errorToastMessage = error.localizedDescription
+            }
         }
         await MainActor.run { isLoading = false }
     }
@@ -138,8 +142,7 @@ struct ProfileEditView: View {
                 try? await Task.sleep(nanoseconds: 1_000_000_000)
                 await MainActor.run { dismiss() }
             } catch {
-                print("Failed to save profile: \(error)")
-                await MainActor.run { toastMessage = "프로필 수정에 실패했습니다." }
+                await MainActor.run { errorToastMessage = error.localizedDescription }
             }
             await MainActor.run { isSaving = false }
         }

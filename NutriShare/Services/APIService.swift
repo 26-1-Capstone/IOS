@@ -12,6 +12,9 @@ class APIService {
     private init() {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 30
+        config.httpCookieStorage = .shared
+        config.httpShouldSetCookies = true
+        config.waitsForConnectivity = true
         self.session = URLSession(configuration: config)
         self.decoder = JSONDecoder()
         self.baseURL = Self.resolveBaseURL()
@@ -71,29 +74,26 @@ class APIService {
                 guard let retryHttp = retryResponse as? HTTPURLResponse,
                       (200...299).contains(retryHttp.statusCode) else {
                     AuthManager.shared.removeToken()
-                    throw APIError.unauthorized
+                    throw APIError.unauthorized(message: decodeUnauthorizedMessage(from: retryData))
                 }
                 return try decodeResponse(T.self, from: retryData, response: retryHttp, url: url)
             } else {
                 AuthManager.shared.removeToken()
-                throw APIError.unauthorized
+                throw APIError.unauthorized(message: decodeUnauthorizedMessage(from: data))
             }
         }
 
         guard (200...299).contains(httpResponse.statusCode) else {
-            // Try to parse error response
-            if let errorResponse = try? decoder.decode(ApiResponse<String>.self, from: data),
-               let error = errorResponse.error {
-                log("❌ Server Error [\(httpResponse.statusCode)]: \(error.code ?? "-") - \(error.message ?? "-")")
-            }
-            throw APIError.serverError(httpResponse.statusCode)
+            let message = decodeServerMessage(from: data)
+            log("❌ Server Error [\(httpResponse.statusCode)]: \(message)")
+            throw APIError.serverError(httpResponse.statusCode, message: message)
         }
 
         return try decodeResponse(T.self, from: data, response: httpResponse, url: url)
     }
 
     private func refreshToken() async throws -> String? {
-        guard let url = URL(string: baseURL.replacingOccurrences(of: "/api/v1", with: "") + "/api/v1/auth/reissue") else {
+        guard let url = URL(string: authBaseURL + "/api/v1/auth/reissue") else {
             return nil
         }
         var request = URLRequest(url: url)
@@ -108,6 +108,13 @@ class APIService {
 
         let apiResponse = try decoder.decode(ApiResponse<String>.self, from: data)
         return apiResponse.data
+    }
+
+    private var authBaseURL: String {
+        if baseURL.hasSuffix("/api/v1") {
+            return String(baseURL.dropLast("/api/v1".count))
+        }
+        return baseURL
     }
 
     // MARK: - Convenience Methods
@@ -145,7 +152,7 @@ class APIService {
             // Spring Security might redirect to a login page if the token is invalid/missing instead of returning 401.
             if preview.contains("login") || preview.contains("<!DOCTYPE html>") {
                 AuthManager.shared.removeToken()
-                throw APIError.unauthorized
+                throw APIError.unauthorized(message: "로그인이 만료되었어요. 다시 로그인해 주세요.")
             }
             
             throw APIError.nonJSONResponse(
@@ -180,10 +187,35 @@ class APIService {
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+    private func decodeServerMessage(from data: Data) -> String {
+        if let payload = try? decoder.decode(ApiResponse<EmptyResponse>.self, from: data),
+           let message = payload.error?.message?.nilIfBlank {
+            return message
+        }
+
+        if let payload = try? decoder.decode(ApiError.self, from: data),
+           let message = payload.message?.nilIfBlank {
+            return message
+        }
+
+        return "요청 처리에 실패했습니다."
+    }
+
+    private func decodeUnauthorizedMessage(from data: Data) -> String {
+        let message = decodeServerMessage(from: data)
+        if message == "요청 처리에 실패했습니다." {
+            return "로그인이 만료되었어요. 다시 로그인해 주세요."
+        }
+        return message
+    }
+
     private static func resolveBaseURL() -> String {
+        if let override = UserDefaults.standard.string(forKey: "APIBaseURLOverride")?.nilIfBlank {
+            return override.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        }
         if let configured = Bundle.main.object(forInfoDictionaryKey: "APIBaseURL") as? String,
            !configured.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return configured
+            return configured.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
         }
         return "http://localhost:8080/api/v1"
     }
@@ -194,8 +226,8 @@ class APIService {
 enum APIError: LocalizedError {
     case invalidURL
     case invalidResponse
-    case unauthorized
-    case serverError(Int)
+    case unauthorized(message: String)
+    case serverError(Int, message: String)
     case nonJSONResponse(statusCode: Int, url: String, preview: String)
     case decodingFailed(url: String, statusCode: Int, underlying: String, preview: String?)
 
@@ -203,8 +235,8 @@ enum APIError: LocalizedError {
         switch self {
         case .invalidURL: return "잘못된 URL입니다."
         case .invalidResponse: return "서버 응답이 올바르지 않습니다."
-        case .unauthorized: return "인증이 필요합니다."
-        case .serverError(let code): return "서버 오류가 발생했습니다. (\(code))"
+        case .unauthorized(let message): return message
+        case .serverError(let code, let message): return "\(message) (\(code))"
         case .nonJSONResponse(let statusCode, let url, let preview):
             return "JSON 대신 다른 응답을 받았습니다. [\(statusCode)] \(url) \(preview)"
         case .decodingFailed(let url, let statusCode, let underlying, let preview):
@@ -227,5 +259,14 @@ struct AnyEncodable: Encodable {
 
     func encode(to encoder: Encoder) throws {
         try _encode(encoder)
+    }
+}
+
+private struct EmptyResponse: Decodable {}
+
+private extension String {
+    var nilIfBlank: String? {
+        let trimmed = trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
     }
 }

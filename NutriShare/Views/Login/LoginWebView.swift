@@ -5,6 +5,7 @@ struct LoginWebView: UIViewRepresentable {
     let url: URL
     let onTokenReceived: (String) -> Void
     let onCancel: () -> Void
+    let onError: (String) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -49,6 +50,10 @@ struct LoginWebView: UIViewRepresentable {
                         decisionHandler(.cancel) // Stop loading a blank page
                         return
                     }
+
+                    parent.onError("로그인 토큰을 받지 못했어요. 다시 시도해 주세요.")
+                    decisionHandler(.cancel)
+                    return
                 }
             }
             
@@ -57,11 +62,12 @@ struct LoginWebView: UIViewRepresentable {
 
         func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
             print("❌ WebView failed provisional navigation: \(error.localizedDescription)")
-            // If the error is network related, maybe the backend is not running or unreachable
+            parent.onError("로그인 페이지를 열지 못했어요. 서버 주소를 확인해 주세요.")
         }
 
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
             print("❌ WebView failed navigation: \(error.localizedDescription)")
+            parent.onError("로그인 페이지 이동 중 오류가 발생했어요.")
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

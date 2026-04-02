@@ -42,7 +42,7 @@ SwiftUI 기반으로 구성되어 있고, 로컬 백엔드와 연동해 홈, 공
 ## Run
 
 1. 백엔드를 먼저 실행합니다.  
-   현재 기본 API Base URL은 `http://localhost:8080/api/v1` 입니다.
+   현재 기본 API Base URL은 `http://3.36.139.67/api/v1` 입니다.
 
 2. Xcode에서 아래 프로젝트를 엽니다.
    ```
@@ -63,4 +63,3 @@ NutriShare/
 ├── Services/     # 네트워크 및 인증 처리
 └── Utils/        # 디자인 시스템 및 공용 유틸
 ```
-

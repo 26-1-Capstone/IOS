@@ -467,7 +467,10 @@ struct MyPageView: View {
                 }
             }
         } catch {
-            print("Failed to load mypage: \(error)")
+            await MainActor.run {
+                errorMessage = error.localizedDescription
+                showingErrorAlert = true
+            }
         }
         await MainActor.run { isLoading = false }
     }
@@ -509,9 +512,8 @@ struct MyPageView: View {
                     completedReviewParticipationIds.insert(pid)
                 }
             } catch {
-                print("Failed to submit review: \(error)")
                 await MainActor.run {
-                    errorMessage = "리뷰 등록에 실패했습니다."
+                    errorMessage = error.localizedDescription
                     showingErrorAlert = true
                 }
             }
@@ -537,24 +539,9 @@ struct MyPageView: View {
                     }
                 }
             }
-        } catch let error as APIError {
-            await MainActor.run {
-                switch error {
-                case .serverError(400), .serverError(409):
-                    errorMessage = "취소할 수 없는 주문입니다."
-                case .serverError(let code):
-                    errorMessage = "주문 취소 중 서버 오류가 발생했습니다. (코드: \(code))"
-                case .unauthorized:
-                    errorMessage = "로그인이 필요합니다."
-                default:
-                    errorMessage = error.localizedDescription
-                }
-                showingErrorAlert = true
-            }
         } catch {
-            print("Failed to cancel order: \(error)")
             await MainActor.run {
-                errorMessage = "주문 취소 중 오류가 발생했습니다."
+                errorMessage = error.localizedDescription
                 showingErrorAlert = true
             }
         }
